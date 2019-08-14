@@ -18,9 +18,9 @@ public class CaixaEletronico {
 
         // 'Criando as duas contas:
         ContaCorrente CC = new ContaCorrente(1234, 1111, 3, 500.00);
-        ContaCorrente CC1 = new ContaCorrente(12345, 2222, 6, 300.00);
-        ContaPoupanca cp = new ContaPoupanca(78910, 5555, 1, 1000.00);
-        ContaPoupanca cp1 = new ContaPoupanca(8910, 6666, 7, 200.00);
+        ContaCorrente CC1 = new ContaCorrente(12345, 2222, 6, 500.00);
+        ContaPoupanca cp = new ContaPoupanca(78910, 5555, 1, 500.00);
+        ContaPoupanca cp1 = new ContaPoupanca(8910, 6666, 7, 500.00);
 
         // 'Um saque e imprimi saldo de duas contas:
         System.out.println("====PRIMEIRO=SAQUE==");
@@ -34,25 +34,31 @@ public class CaixaEletronico {
 
         /* 'Transferindo de duas contas e mostrando os valores 
         da contas envolvidas*/
-        cp.transferencia(1000.00, CC1);
-        CC.transferencia(900.00, cp1);
+        System.out.println("OCORRÊNCIA DAS DUAS TRANSFERÊNCIAS:: DA CONTA"
+                + "POUPANÇA\n:: E DA CONTA CORRENTE");
+
+        cp.transferencia(500.00, CC1);
+        CC.transferencia(500.00, cp1);
         cp.saldo();
         CC1.saldo();
         CC.saldo();
         cp1.saldo();
-        
-        System.out.println(""+
-        "/* 'Realiazando tentativa de saque e uma transfência que\n "
-        +"não tenha saldo suficiente mesmo com limite */");
+
+        System.out.println(""
+                + "/* 'Realiazando tentativa de saque e uma transfência que\n "
+                + "não tenha saldo suficiente mesmo com limite */");
         CC.saque(20000);
+        CC.saldo();
+        System.out.println(".......conta CC acima");
         CC.transferencia(20000, CC1);
+        System.out.println(".......conta CC transferiu?");
         CC1.saldo();
         CC.saldo();
         System.out.println("TESTE CONTROLADO DOS METODOS SACAR E TRANSFERIR");
         CC1.transferencia(100000, CC);
         CC.saldo();
         CC1.saldo();
-       
+
     }
 
 }

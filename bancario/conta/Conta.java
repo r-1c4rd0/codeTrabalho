@@ -4,33 +4,34 @@
  * and open the template in the editor.
  */
 package trabalho.faculdade.unicesumar.bancario.conta;
+
 import java.time.LocalDate;
+
 /**
  *
  * @author Ricardo_Santiago
  */
 public class Conta {
+
     protected int agencia;
     protected int numero;
     protected int digito;
     protected double saldo;
-    
-    
-    public Conta(){
-        this(0,0,0,0);
+
+    public Conta() {
+        this(0, 0, 0, 0);
     }
-    
-    public Conta(Conta cp){
+
+    public Conta(Conta cp) {
         this(cp.agencia, cp.digito, cp.numero, cp.saldo);
     }
-    
-    public Conta(int a, int n, int d, double s){
+
+    public Conta(int a, int n, int d, double s) {
         this.setAgencia(a);
         this.setNumero(n);
         this.setDigito(d);
         this.setSaldo(s);
     }
-   
 
     public int getAgencia() {
         return agencia;
@@ -63,49 +64,52 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    
-    public void deposito(double valor){
-        this.setSaldo(this.getSaldo()+valor);
+
+    public void deposito(double valor) {
+        if(valor>=0)
+            this.setSaldo(this.getSaldo() + valor);
     }
-    public void transferencia(double valor, Conta ct){
-        if(valor>0){   
-            if(this.getSaldo()<=0){
+
+    public void transferencia(double valor, Conta ct) {
+        if (valor > 0) {
+            if (this.getSaldo() <= 0) {
                 System.out.println("Conta sem saldo!!!");
-            }else{
-                
+            } else {
+
                 this.saque(valor);
                 //this.setSaldo();
                 ct.deposito(valor);
                 //ct.setSaldo();
-                
+
                 System.out.println("Dinheiro transferido\n\n");
             }
-        }    
-        
-   }
-    public void saque(double valor){
-        if(this.getSaldo() >= 0.0&&this.getSaldo() - valor>0){            
-            this.setSaldo((this.getSaldo() - valor));
-            System.out.println("SAQUE REALIZADO COM SUCESSO!!!");            
-        }else{
-            
-            System.out.println("LIMITE NÃO DISPONIVEL!!! ");
         }
-        
+
+    }
+
+    public void saque(double valor) {
+        if (this.getSaldo() >= 0.0 && this.getSaldo() - valor > 0) {
+            if (this.getSaldo() >= valor) {
+                this.setSaldo((this.getSaldo() - valor));
+
+            } else {
+                System.out.println("=====================");
+                System.out.println("SAQEUE CONTA "+ toString() +" NÃO REALIZADO");
+                System.out.println("=====================");
+            }
+        }
     }
     
-    public void saldo(){
+
+    public void saldo() {
         System.out.println("\t\n\n_________________________________");
         System.out.println("=================================");
-        System.out.println(":::CONTA       "+toString());
+        System.out.println(":::CONTA       " + toString());
         System.out.println("=================================");
-        
-        System.out.println(" |Agência:     "+this.getAgencia()+"\n |Conta:    "+ this.getNumero()+"-"+this.getDigito());
-        System.out.printf(" |Saldo: " + String.format("R$%,.2f", this.getSaldo())+"\n");
+
+        System.out.println(" |Agência:     " + this.getAgencia() + "\n |Conta:    " + this.getNumero() + "-" + this.getDigito());
+        System.out.printf(" |Saldo: " + String.format("R$%,.2f", this.getSaldo()) + "\n");
         System.out.println("=================================\n\n\t");
     }
-    
-    
-   
-    
+
 }

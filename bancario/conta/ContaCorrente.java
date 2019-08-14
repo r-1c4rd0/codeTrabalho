@@ -27,46 +27,37 @@ public class ContaCorrente extends Conta {
     public void setLimite(double limite) {
         double v = this.getSaldo();
         this.limite = (v + (v * 0.03));
+        if(this.getLimite()<this.getSaldo())
+            this.setSaldo(this.getLimite());
     }
 
     @Override
     public void saque(double valor) {
-
-        if (this.getSaldo() - this.getLimite() >= this.getLimite()) {
-            this.setSaldo((this.getSaldo() - valor));
-        } else {
-            System.out.println("Valor indisponível");
+        if (this.getSaldo()>=0&&this.getSaldo()>=valor) {
+            this.setSaldo( (this.getSaldo()- valor) );
+        } else if (this.getSaldo() <= 0 && this.getLimite() >= valor) {
+            this.setSaldo((this.getLimite() - valor));
+        } else  {
+            System.out.println("======================");
+            System.out.println("SEM SALDO DISPONÍVEL");
+            System.out.println("======================");
         }
     }
 
-   
     @Override
     public void transferencia(double valor, Conta ct) {
-        if (this.getSaldo() <= 0) {
-            if (this.getLimite() > 0 && this.getLimite()<valor) {
-                this.setLimite((this.getLimite() - valor));
-                ct.deposito(valor);
-            }else{
-                System.out.println("=================");
-                System.out.println("TRANSFERÊNCIA NÃO AUTORIZADA!!!!");
-                System.out.println("=================");
-            }
-        }else if(this.getSaldo()< valor){
-            this.setSaldo((this.getSaldo()-valor));
-            ct.deposito(valor);
-        }else{
-                System.out.println("=================");
-                System.out.println("TRANSFERÊNCIA NÃO AUTORIZADA!!!!");
-                System.out.println("=================");
-            }
+        if(this.getSaldo()>= valor || this.getLimite()>=valor && this.getLimite()-valor>=0 ){
+            this.setSaldo( (this.getSaldo()-valor));            
+            ct.deposito(valor);           
+        }
+        System.out.println("==========================");
+        System.out.println("TRANSFERÊNCIA NÃO REALIZADA");
+        System.out.println("==========================");
+    }
 
-    
-        
-    
-}
-@Override
-        public String toString(){
+    @Override
+    public String toString() {
         String forLimeti = String.format("%,.2f", this.getLimite());
-        return "  \tCORRENTE:::"+"\n\nLimite Disponível R$: "+forLimeti;
+        return "  \tCORRENTE:::" + "\n\nLimite Disponível R$: " + forLimeti;
     }
 }
